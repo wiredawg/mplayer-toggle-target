@@ -1,0 +1,21 @@
+#!/usr/bin/env bash
+
+cd $HOME/.mplayer
+
+if [ -L config ]
+then
+    current=$(readlink -f config)
+    bname=$(basename $current)
+    if [ "$bname" == "config-speaker" ]
+    then
+        target="config-usb"
+    else
+        target="config-speaker"
+    fi
+    rm -f config
+    ln -s $target config
+    echo ${target/config-/}
+else
+    echo "config is not a link, cannot toggle"
+    exit 1
+fi
